@@ -29,6 +29,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.chatapp.destinations.ChatViewDestination
+import com.example.chatapp.destinations.SingUpScreenDestination
 import com.example.chatapp.destinations.loginScreenDestination
 import com.example.chatapp.ui.theme.ChatAppTheme
 import com.google.firebase.FirebaseApp
@@ -113,7 +115,7 @@ fun SingUpScreen(nav: DestinationsNavigator) {
                                 Text(text = " alberto@gmail.com ", fontSize = 14.sp, color = Color(0xff262626))
                             },
                             singleLine = true,
-                            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
+                            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
 
                             )
                     }
@@ -156,13 +158,10 @@ fun SingUpScreen(nav: DestinationsNavigator) {
                                 Text(text = " alberto@gmail.com ", fontSize = 14.sp, color = Color(0xFF262626))
                             },
                             singleLine = true,
-                            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
+                            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
 
                             )
                     }
-//                    Row(modifier = Modifier.fillMaxWidth().padding(40.dp,0.dp) , horizontalArrangement = Arrangement.End) {
-//                        Text(text = "forgot Password ?")
-//                    }
 
                      Spacer(modifier = Modifier.height(140.dp))
                         Button(modifier = Modifier
@@ -171,6 +170,7 @@ fun SingUpScreen(nav: DestinationsNavigator) {
                             .padding(40.dp, 0.dp),onClick = {
                             nav.navigate(loginScreenDestination)
                             //your onclick code here
+                            nav.navigate(ChatViewDestination)
                         },shape = RoundedCornerShape(10.dp),colors = ButtonDefaults.buttonColors(backgroundColor =Color(0xFFFFA925))) {
                             Text(text = "Sign Up",color = Color(0xFFFFFFFF))
                         }
@@ -195,7 +195,7 @@ fun SingUpScreen(nav: DestinationsNavigator) {
     }
 }
 @Composable
-@Destination
+@Destination(start = true)
 fun loginScreen(nav: DestinationsNavigator) {
 
     var email by rememberSaveable { mutableStateOf("") }
@@ -253,7 +253,7 @@ fun loginScreen(nav: DestinationsNavigator) {
                                 Text(text = " alberto@gmail.com ", fontSize = 14.sp, color = Color(0xff262626))
                             },
                             singleLine = true,
-                            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
+                            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
 
                             )
                     }
@@ -296,7 +296,7 @@ fun loginScreen(nav: DestinationsNavigator) {
                                 Text(text = " alberto@gmail.com ", fontSize = 14.sp, color = Color(0xFF262626))
                             },
                             singleLine = true,
-                            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
+                            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
 
                             )
                     }
@@ -313,6 +313,7 @@ fun loginScreen(nav: DestinationsNavigator) {
 //                            .height(58.dp)
                         .padding(40.dp, 0.dp),onClick = {
                         //your onclick code here
+                          nav.navigate(ChatViewDestination)
                     },shape = RoundedCornerShape(10.dp),colors = ButtonDefaults.buttonColors(backgroundColor =Color(0xFFFFA925))) {
                         Text(text = "Login",color = Color(0xFFFFFFFF))
                     }
@@ -321,7 +322,9 @@ fun loginScreen(nav: DestinationsNavigator) {
 //                        .padding(40.dp, 0.dp)
                         , horizontalArrangement = Arrangement.Center) {
                         Text(modifier = Modifier.padding(0.dp,17.dp),text = "Dont have a account? ",fontSize = 12.sp)
-                        TextButton(onClick = { /*TODO*/ }, modifier = Modifier.padding(0.dp)) {
+                        TextButton(onClick = { /*TODO*/
+                                             nav.navigate(SingUpScreenDestination)
+                                             }, modifier = Modifier.padding(0.dp)) {
                             Text  ("login here", color = Color(0xffffA925), fontSize = 12.sp)
                         }
                     }
@@ -486,7 +489,7 @@ fun ContactView(nav: DestinationsNavigator){
 }
 
 @Composable
-@Destination(start = true)
+@Destination
 fun ChatView(nav: DestinationsNavigator){
     Column(modifier = Modifier.fillMaxSize()) {
         Row(verticalAlignment = Alignment.Top,
@@ -532,18 +535,18 @@ fun ChatView(nav: DestinationsNavigator){
 //                            nav.navigate(searchNoteDestination)
                             },
                             colors = ButtonDefaults.buttonColors(
-                                backgroundColor = Color(0xFFFAFAFA),
+                                backgroundColor = Color(0xFFFfffff),
                                 contentColor = androidx.compose.ui.graphics.Color.White
                             ),
                             modifier = Modifier
                                 .align(Alignment.End)
                                 .size(48.dp, 48.dp),
-                            shape = RoundedCornerShape(15.dp),
+                            shape = RoundedCornerShape(20.dp),
                             contentPadding = PaddingValues(0.dp, 0.dp, 0.dp, 0.dp)
                         ) {
                             Image(
                                 painter = painterResource(R.drawable.unsplash_tn8dlxwudma),
-                                contentDescription = "Search"
+                                contentDescription = "User"
                             )
                         }
                     }
@@ -587,7 +590,9 @@ fun ChatView(nav: DestinationsNavigator){
 //            }
 //        }
 
-        LazyColumn(modifier = Modifier.fillMaxWidth().height(550.dp)) {
+        LazyColumn(modifier = Modifier
+            .fillMaxWidth()
+            .height(580.dp)) {
 
 
             // Add 5 items
